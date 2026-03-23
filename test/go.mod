@@ -1,13 +1,11 @@
 //
-// Copyright (c) 2022, 2025 Oracle and/or its affiliates.
+// Copyright (c) 2022, 2026 Oracle and/or its affiliates.
 // Licensed under the Universal Permissive License v 1.0 as shown at
 // https://oss.oracle.com/licenses/upl.
 //
 module github.com/oracle/coherence-go-client/v2/test
 
-go 1.23.0
-
-toolchain go1.23.7
+go 1.26.1
 
 require (
 	github.com/google/uuid v1.6.0
