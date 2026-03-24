@@ -590,7 +590,7 @@ test-resolver-cluster: test-clean gotestsum $(BUILD_PROPS) ## Run Resolver tests
 # ----------------------------------------------------------------------------------------------------------------------
 $(TOOLS_BIN)/golangci-lint:
 	@mkdir -p $(TOOLS_BIN)
-	curl $(CURL_AUTH) -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(TOOLS_BIN) v1.64.8
+	curl $(CURL_AUTH) -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(TOOLS_BIN) v2.11.4
 
 
 # ----------------------------------------------------------------------------------------------------------------------
