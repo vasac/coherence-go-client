@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (c) 2025 Oracle and/or its affiliates.
+# Copyright (c) 2025, 2026 Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
 #
@@ -24,6 +24,7 @@ fi
 DIR=`pwd`
 DAPR_TEST_DIR=$1
 DAPR_TEST_HOME=$2
+DAPR_VERSION=${DAPR_VERSION:-v1.15.14}
 
 mkdir -p $DAPR_TEST_HOME
 
@@ -58,7 +59,9 @@ echo
 echo "Cloning repositories..."
 cd $DAPR_TEST_HOME
 rm -rf dapr || true
-git clone https://github.com/dapr/dapr.git
+# Pin Dapr so this workflow remains compatible with the supported Go 1.25/1.26 matrix;
+# the expected behavior is that upstream Dapr main can raise its Go floor without breaking these tests.
+git clone --branch "$DAPR_VERSION" --depth 1 https://github.com/dapr/dapr.git
 cd dapr
 
 # Test with the current go client
@@ -97,7 +100,6 @@ dapr run --app-id myapp --resources-path $COMPONENTS --log-level debug  -- go ru
 
 # Verify the caches
 cohctl get caches -o wide
-
 
 
 

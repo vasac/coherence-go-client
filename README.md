@@ -31,11 +31,11 @@ to a Coherence Cluster using gRPC for the network transport.
 #### Requirements
 
 * Coherence CE 22.06.4+, 25.03+ or Coherence 14.1.1.2206.4+ Commercial edition with a configured [gRPCProxy](https://docs.oracle.com/en/middleware/standalone/coherence/14.1.1.2206/develop-remote-clients/using-coherence-grpc-server.html).
-* Go 1.24.+
+* Go 1.25.9+
 
 > Note: If you wish to use the queues API in the latest release, you must use CE 24.09 or commercial version 14.1.2.0.x.
 
-> Note: If you wish to use Go versions < 1.24 you can use v2.3.1 of the client.
+> Note: If you wish to use Go versions < 1.25.9 you can use v2.3.1 of the client.
 
 #### <a name="start"></a> Starting a gRPC enabled Coherence cluster
 
