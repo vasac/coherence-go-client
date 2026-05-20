@@ -24,7 +24,7 @@ fi
 DIR=`pwd`
 DAPR_TEST_DIR=$1
 DAPR_TEST_HOME=$2
-DAPR_VERSION=${DAPR_VERSION:-v1.15.14}
+DAPR_VERSION=${DAPR_VERSION:-v1.17.6}
 
 mkdir -p $DAPR_TEST_HOME
 
@@ -59,8 +59,9 @@ echo
 echo "Cloning repositories..."
 cd $DAPR_TEST_HOME
 rm -rf dapr || true
-# Pin Dapr so this workflow remains compatible with the supported Go 1.25/1.26 matrix;
-# the expected behavior is that upstream Dapr main can raise its Go floor without breaking these tests.
+# Pin to the latest Dapr release that still supports Go 1.25 so required CI stays stable
+# across the supported Go 1.25/1.26 matrix while Dapr main and newer patches raise their Go floor.
+# The expected behavior is that upstream Dapr changes only affect these tests when DAPR_VERSION is updated.
 git clone --branch "$DAPR_VERSION" --depth 1 https://github.com/dapr/dapr.git
 cd dapr
 
@@ -100,6 +101,5 @@ dapr run --app-id myapp --resources-path $COMPONENTS --log-level debug  -- go ru
 
 # Verify the caches
 cohctl get caches -o wide
-
 
 
