@@ -45,6 +45,9 @@ CLUSTER_PORT ?= 7574
 # Profiles to include for building
 PROFILES ?=
 COHERENCE_BASE_IMAGE ?= gcr.io/distroless/java11-debian11
+# Keep Trivy close to the supported upstream release so scheduled scans keep installing cleanly.
+# Expected behavior: gettrivy fails only when the current installer or scan fails, not because an obsolete binary is no longer served.
+TRIVY_VERSION ?= v0.70.0
 
 CURL_OPTS = -L --retry 10 --retry-delay 5
 
@@ -632,4 +635,4 @@ endef
 .PHONY: gettrivy
 gettrivy:
 	@mkdir -p $(TOOLS_BIN)
-	curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $(TOOLS_BIN) v0.51.2
+	curl $(CURL_AUTH) -sSfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $(TOOLS_BIN) $(TRIVY_VERSION)

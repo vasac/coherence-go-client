@@ -31,8 +31,8 @@ jobs:
           - 14.1.2-0-3
           - 25.03.2
         go-version:
-          - 1.23.x
           - 1.24.x
+          - 1.25.x
 
 
 #   Checkout the source, we need a depth of zero to fetch all of the history otherwise

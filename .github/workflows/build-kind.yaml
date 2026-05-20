@@ -16,7 +16,7 @@ on:
       go-version:
         description: "Go version (comma-separated for matrix)"
         required: false
-        default: "1.23.x,1.24.x"
+        default: "1.24.x,1.25.x"
       max-iterations:
         description: "Maximum number of iterations"
         required: false

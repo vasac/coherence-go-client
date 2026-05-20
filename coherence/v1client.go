@@ -167,7 +167,9 @@ func (m *streamManagerV1) ensureStream() (*eventStreamV1, error) {
 
 		// save the server information received
 		m.setServerInfo(response)
-		m.session.debugConnection(getInitDescription(response))
+		// Log the generated description as data so stricter Go vet checks do not parse it as
+		// a printf template; the expected output is unchanged.
+		m.session.debugConnection("%s", getInitDescription(response))
 
 		// goroutine to handle MapEventResponse instances returned
 		// from event stream

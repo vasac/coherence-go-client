@@ -86,7 +86,9 @@ func (r *nsLookupResolver) resolve() {
 
 		if len(grpcEndpoints) == 0 {
 			msg := "resolver produced zero addresses"
-			resolverDebug(msg)
+			// Treat the diagnostic as log data so stricter Go vet checks do not interpret it as
+			// a printf template; the expected behavior is the same literal debug message.
+			resolverDebug("%s", msg)
 			r.cc.ReportError(errors.New(msg))
 			return
 		}
