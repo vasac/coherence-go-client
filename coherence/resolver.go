@@ -153,7 +153,11 @@ func NsLookupGrpcAddresses(address string) ([]string, error) {
 		if err != nil {
 			return emptyAddresses, err
 		}
-		defer nsF.Close()
+		// Close the foreign-cluster lookup connection on every return path; lookup errors remain the useful caller signal,
+		// so close errors are intentionally ignored after the name-service query has completed.
+		defer func() {
+			_ = nsF.Close()
+		}()
 
 		query := discovery.NSPrefix + discovery.ClusterForeignLookup + "/" + foreignCluster + discovery.NSLocalPort
 		resolverDebug("lookup for foreign cluster NS port using %s", query)
@@ -175,7 +179,11 @@ func NsLookupGrpcAddresses(address string) ([]string, error) {
 		return emptyAddresses, err
 	}
 
-	defer ns.Close()
+	// Close the lookup connection after resolving proxy addresses; returning lookup errors preserves the behavior callers rely on,
+	// while the deferred close only releases the transient name-service connection.
+	defer func() {
+		_ = ns.Close()
+	}()
 
 	addrString, err = ns.Lookup(discovery.NSPrefix + discovery.GrpcProxyLookup)
 	if err != nil {

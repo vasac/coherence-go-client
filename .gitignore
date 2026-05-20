@@ -31,6 +31,9 @@ dependency-reduced-pom.xml
 !.github
 !.gitignore
 !.mvn
+# Track the golangci-lint v2 configuration so CI uses the same correctness-focused checks as local runs.
+# Expected behavior: the ignored hidden-file rule still applies broadly, while the linter config is versioned.
+!.golangci.yml
 
 # Go
 

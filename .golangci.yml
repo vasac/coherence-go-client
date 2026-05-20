@@ -1,0 +1,11 @@
+version: "2"
+
+linters:
+  settings:
+    staticcheck:
+      # Keep staticcheck focused on correctness checks after moving to golangci-lint v2 for Go 1.25 support.
+      # Expected behavior: CI continues to catch real staticcheck issues without failing on style-only or quick-fix rewrites.
+      checks:
+        - all
+        - "-QF*"
+        - "-ST*"

@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------------------------------------------------
-# Copyright (c) 2021, 2025 Oracle and/or its affiliates.
+# Copyright (c) 2021, 2026 Oracle and/or its affiliates.
 # Licensed under the Universal Permissive License v 1.0 as shown at
 # https://oss.oracle.com/licenses/upl.
 #
@@ -51,6 +51,9 @@ TRIVY_VERSION ?= v0.70.0
 # Use a gotestsum release with Go 1.25-compatible x/tools dependencies so CI can install the test runner before resolver tests start.
 # Expected behavior: the gotestsum target remains usable across the supported Go matrix.
 GOTESTSUM_VERSION ?= v1.13.0
+# Use a golangci-lint release built with a new enough Go toolchain for this module's Go 1.25 floor.
+# Expected behavior: lint jobs fail on source issues, not because the linter binary targets an older Go release.
+GOLANGCI_LINT_VERSION ?= v2.11.0
 
 CURL_OPTS = -L --retry 10 --retry-delay 5
 
@@ -596,7 +599,7 @@ test-resolver-cluster: test-clean gotestsum $(BUILD_PROPS) ## Run Resolver tests
 # ----------------------------------------------------------------------------------------------------------------------
 $(TOOLS_BIN)/golangci-lint:
 	@mkdir -p $(TOOLS_BIN)
-	curl $(CURL_AUTH) -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(TOOLS_BIN) v1.64.8
+	curl $(CURL_AUTH) -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(TOOLS_BIN) $(GOLANGCI_LINT_VERSION)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
