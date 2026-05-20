@@ -48,6 +48,9 @@ COHERENCE_BASE_IMAGE ?= gcr.io/distroless/java11-debian11
 # Keep Trivy close to the supported upstream release so scheduled scans keep installing cleanly.
 # Expected behavior: gettrivy fails only when the current installer or scan fails, not because an obsolete binary is no longer served.
 TRIVY_VERSION ?= v0.70.0
+# Use a gotestsum release with Go 1.25-compatible x/tools dependencies so CI can install the test runner before resolver tests start.
+# Expected behavior: the gotestsum target remains usable across the supported Go matrix.
+GOTESTSUM_VERSION ?= v1.13.0
 
 CURL_OPTS = -L --retry 10 --retry-delay 5
 
@@ -533,7 +536,7 @@ test-coherence-shutdown: ## shutdown standalone cluster
 .PHONY: gotestsum
 GOTESTSUM = $(TOOLS_BIN)/gotestsum
 gotestsum: ## Download gotestsum locally if necessary.
-	GOBIN=`pwd`/build/tools/bin go install gotest.tools/gotestsum@v1.12.0
+	GOBIN=`pwd`/build/tools/bin go install gotest.tools/gotestsum@$(GOTESTSUM_VERSION)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Cleans the test cache
